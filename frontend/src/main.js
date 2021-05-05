@@ -5,7 +5,13 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 
-Vue.config.productionTip = false
+import './assets/css/global.css'
+
+import axios from 'axios'
+axios.defaults.baseURL = 'http://127.0.0.1:7000/'
+Vue.prototype.$axios = axios
+
+Vue.config.productionTip = true
 
 new Vue({
   router,
