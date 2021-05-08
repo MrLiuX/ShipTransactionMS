@@ -13,3 +13,5 @@ class Personnel(models.Model):
 
 class Department(models.Model):
     department = models.CharField(max_length=255, primary_key=True)
+    minister = models.CharField(max_length=255, default="none")
+    note = models.CharField(max_length=255, default="无")

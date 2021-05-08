@@ -18,6 +18,8 @@
               <span>基本信息管理</span>
             </template>
             <el-menu-item index="personnel">人员管理</el-menu-item>
+            <el-menu-item index="department">部门管理</el-menu-item>
+            <el-menu-item index="ship">船盘信息管理</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

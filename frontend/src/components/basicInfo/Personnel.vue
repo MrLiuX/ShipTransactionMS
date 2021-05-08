@@ -155,7 +155,6 @@ export default {
       )
       this.tableData1.push(res4)
       this.dialogTableVisible = true
-      console.log(this.searchInfo)
     },
     dialogClose() {
       this.tableData1 = []

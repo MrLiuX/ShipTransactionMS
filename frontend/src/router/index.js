@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Login from '../components/Login.vue'
-import personnel from '../components/Personnel.vue'
+import Personnel from '../components/basicInfo/Personnel.vue'
+import Department from '../components/basicInfo/Department.vue'
+import Ship from '../components/basicInfo/Ship.vue'
 
 Vue.use(VueRouter)
 
@@ -12,7 +14,11 @@ const routes = [
   {
     path: '/home',
     component: Home,
-    children: [{ path: '/personnel', component: personnel }]
+    children: [
+      { path: '/personnel', component: Personnel },
+      { path: '/department', component: Department },
+      { path: '/ship', component: Ship }
+    ]
   }
 ]
 
