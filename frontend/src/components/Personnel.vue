@@ -10,8 +10,16 @@
       </div>
       <div>
         <div>
-          <el-input placeholder="请输入员工编号进行搜索" class="search-input">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input
+            placeholder="请输入员工编号进行搜索"
+            class="search-input"
+            v-model="searchId"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getPersonnel"
+            ></el-button>
           </el-input>
           <el-button @click="dialogFormVisible = true">添加员工</el-button>
         </div>
@@ -25,7 +33,7 @@
             </el-table-column>
             <el-table-column prop="teleNumber" label="固定电话">
             </el-table-column>
-            <el-table-column prop="department_" label="部门" width="80px">
+            <el-table-column prop="department" label="部门" width="80px">
             </el-table-column>
             <el-table-column prop="address" label="家庭住址" width="400px">
             </el-table-column>
@@ -69,6 +77,31 @@
         <el-button type="primary" @click="addPersonnel">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      title="搜索结果"
+      :visible.sync="dialogTableVisible"
+      @closed="dialogClose"
+    >
+      <el-table :data="tableData1">
+        <el-table-column prop="username" label="员工编号" width="80px">
+        </el-table-column>
+        <el-table-column prop="name" label="姓名" width="60px">
+        </el-table-column>
+        <el-table-column prop="mobileNumber" label="手机号码">
+        </el-table-column>
+        <el-table-column prop="teleNumber" label="固定电话"> </el-table-column>
+        <el-table-column prop="department" label="部门" width="80px">
+        </el-table-column>
+        <el-table-column prop="address" label="家庭住址" width="200px">
+        </el-table-column>
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="danger" plain @click="deletePersonnel"
+          >删除员工</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -77,8 +110,12 @@ export default {
   data() {
     return {
       tableData: [],
+      tableData1: [],
       departmentData: [],
       dialogFormVisible: false,
+      dialogTableVisible: false,
+      searchInfo: '',
+      searchId: '',
       form: {
         username: '',
         password: '',
@@ -110,6 +147,23 @@ export default {
         this.$message.success('添加成功')
       }
       this.dialogFormVisible = false
+      window.location.reload()
+    },
+    async getPersonnel() {
+      const { data: res4 } = await this.$axios.get(
+        '/api/personnels/' + this.searchId
+      )
+      this.tableData1.push(res4)
+      this.dialogTableVisible = true
+      console.log(this.searchInfo)
+    },
+    dialogClose() {
+      this.tableData1 = []
+    },
+    deletePersonnel() {
+      this.$axios.delete('/api/personnels/' + this.tableData1[0].username + '/')
+      this.$message.success('删除成功')
+      this.dialogTableVisible = false
       window.location.reload()
     }
   }
