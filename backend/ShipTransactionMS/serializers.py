@@ -5,20 +5,10 @@ from .models import *
 class departmentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Department
-        fields=[
-            'department'
-        ]
+        fields = '__all__'
 
 
 class personnelSerializer(serializers.ModelSerializer):
     class Meta:
         model=Personnel
-        fields=[
-            'name',
-            'username',
-            'password',
-            'mobileNumber',
-            'teleNumber',
-            'address',
-            'department'
-        ]
+        fields='__all__'
