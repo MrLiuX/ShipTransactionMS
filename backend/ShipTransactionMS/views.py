@@ -12,3 +12,8 @@ class departmentViewSet(viewsets.ModelViewSet):
 class personnelViewSet(viewsets.ModelViewSet):
     queryset = Personnel.objects.all()
     serializer_class = personnelSerializer
+
+
+class shipViewSet(viewsets.ModelViewSet):
+    queryset = Ship.objects.all()
+    serializer_class = shipSerializer

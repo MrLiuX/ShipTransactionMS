@@ -12,3 +12,9 @@ class personnelSerializer(serializers.ModelSerializer):
     class Meta:
         model=Personnel
         fields='__all__'
+
+
+class shipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Ship
+        fields = '__all__'

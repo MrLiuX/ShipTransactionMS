@@ -151,7 +151,7 @@ export default {
     },
     async getPersonnel() {
       const { data: res4 } = await this.$axios.get(
-        '/api/personnels/' + this.searchId
+        '/api/personnels/' + this.searchId + '/'
       )
       this.tableData1.push(res4)
       this.dialogTableVisible = true

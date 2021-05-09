@@ -10,6 +10,7 @@ from rest_framework import routers #router路由
 router = routers.DefaultRouter() 
 router.register('departments', views.departmentViewSet)
 router.register('personnels',views.personnelViewSet)
+router.register('ships',views.shipViewSet)
 
 urlpatterns = [
     path('api/',include(router.urls)),
