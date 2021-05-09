@@ -18,3 +18,9 @@ class shipSerializer(serializers.ModelSerializer):
     class Meta:
         model=Ship
         fields = '__all__'
+
+
+class inventorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Inventory
+        fields = '__all__'

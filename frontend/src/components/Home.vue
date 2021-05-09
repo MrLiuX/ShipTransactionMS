@@ -12,7 +12,7 @@
       <!--侧边栏-->
       <el-aside width="200px">
         <el-menu class="aside_meun" router>
-          <el-submenu index="2">
+          <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-connection"></i>
               <span>基本信息管理</span>
@@ -20,6 +20,14 @@
             <el-menu-item index="personnel">人员管理</el-menu-item>
             <el-menu-item index="department">部门管理</el-menu-item>
             <el-menu-item index="ship">船盘信息管理</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-box"></i>
+              <span>物料管理</span>
+            </template>
+            <el-menu-item index="inventory">库存管理</el-menu-item>
+            <el-menu-item index="approval">申请审批</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

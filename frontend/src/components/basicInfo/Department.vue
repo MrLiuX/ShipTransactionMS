@@ -26,7 +26,7 @@
           >
         </div>
         <div>
-          <el-table :data="deparmtnetListData" style="width: 100%">
+          <el-table :data="departmentListData" style="width: 100%">
             <el-table-column prop="department" label="部门"> </el-table-column>
             <el-table-column prop="minister" label="部门管理员">
             </el-table-column>
@@ -92,7 +92,7 @@ export default {
       searchResult: [],
       addDepartmentDialogVisible: false,
       searchDepartmentDialogVisible: false,
-      deparmtnetListData: [],
+      departmentListData: [],
       formLabelWidth: '100px',
       addDepartmentForm: {
         department: '',
@@ -107,7 +107,7 @@ export default {
   methods: {
     async getDepartmentList() {
       const { data: result } = await this.$axios.get('/api/departments/')
-      this.deparmtnetListData = result
+      this.departmentListData = result
     },
     async getDepartment() {
       const { data: result } = await this.$axios.get(

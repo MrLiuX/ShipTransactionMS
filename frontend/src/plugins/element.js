@@ -20,7 +20,8 @@ import {
   Card,
   Dialog,
   Select,
-  Option
+  Option,
+  Link
 } from 'element-ui'
 
 Vue.use(Button)
@@ -43,4 +44,5 @@ Vue.use(Card)
 Vue.use(Dialog)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Link)
 Vue.prototype.$message = Message

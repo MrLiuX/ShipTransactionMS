@@ -7,10 +7,11 @@ from ShipTransactionMS import views
 # rest_framework
 from rest_framework import routers #router路由
 
-router = routers.DefaultRouter() 
+router = routers.DefaultRouter()
 router.register('departments', views.departmentViewSet)
 router.register('personnels',views.personnelViewSet)
 router.register('ships',views.shipViewSet)
+router.register('inventorys',views.inventoryViewSet)
 
 urlpatterns = [
     path('api/',include(router.urls)),

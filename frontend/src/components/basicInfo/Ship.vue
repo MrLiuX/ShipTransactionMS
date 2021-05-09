@@ -26,7 +26,7 @@
           >
         </div>
         <div>
-          <el-table :data="deparmtnetListData" style="width: 100%">
+          <el-table :data="shipListData" style="width: 100%">
             <el-table-column prop="name" label="船名"> </el-table-column>
             <el-table-column prop="manufactureTime" label="制造时间">
             </el-table-column>
@@ -141,7 +141,7 @@ export default {
       searchResult: [],
       addShipDialogVisible: false,
       searchShipDialogVisible: false,
-      deparmtnetListData: [],
+      shipListData: [],
       formLabelWidth: '100px',
       addShipForm: {
         name: '',
@@ -164,7 +164,7 @@ export default {
   methods: {
     async getShipList() {
       const { data: result } = await this.$axios.get('/api/ships/')
-      this.deparmtnetListData = result
+      this.shipListData = result
     },
     async getShip() {
       const { data: result } = await this.$axios.get(

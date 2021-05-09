@@ -5,6 +5,7 @@ import Login from '../components/Login.vue'
 import Personnel from '../components/basicInfo/Personnel.vue'
 import Department from '../components/basicInfo/Department.vue'
 import Ship from '../components/basicInfo/Ship.vue'
+import Inventory from '../components/materials/Inventory.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +18,8 @@ const routes = [
     children: [
       { path: '/personnel', component: Personnel },
       { path: '/department', component: Department },
-      { path: '/ship', component: Ship }
+      { path: '/ship', component: Ship },
+      { path: '/inventory', component: Inventory }
     ]
   }
 ]
