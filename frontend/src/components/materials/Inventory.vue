@@ -64,24 +64,24 @@
             <el-table-column prop="inventoryLowerLimit" label="库存下限">
             </el-table-column>
             <el-table-column prop="unit" label="单位"> </el-table-column>
-            <el-table-column label="操作">
+            <!--<el-table-column label="操作" width="250px">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
                   type="primary"
                   plain
-                  @click="handleEdit(scope.$index, scope.row)"
+                  @click="storageDialogVisible = true"
                   >申请采购入库</el-button
                 >
                 <el-button
                   size="mini"
                   type="success"
                   plain
-                  @click="handleDelete(scope.$index, scope.row)"
+                  @click="UnStorage(scope.$index, scope.row)"
                   >申请出库</el-button
                 >
               </template>
-            </el-table-column>
+            </el-table-column>-->
           </el-table>
         </div>
       </div>
@@ -183,8 +183,90 @@
       <span slot="footer" class="dialog-footer">
         <el-button type="danger" plain @click="deleteInventory"
           >删除物料</el-button
+        ><el-button type="primary" plain @click="storageDialogVisible = true"
+          >申请采购入库</el-button
+        >
+        <el-button
+          type="success"
+          plain
+          @click="UnStorage(scope.$index, scope.row)"
+          >申请出库</el-button
         >
       </span>
+    </el-dialog>
+
+    <!--<el-dialog title="购置入库申请" :visible.sync="storageDialogVisible">
+      <el-form :model="storageForm">
+        <el-form-item label="物料名称" :label-width="formLabelWidth">
+          <el-select v-model="storageForm.Material" placeholder="请选择物料">
+            <el-option
+              :label="dData.name"
+              :value="dData.name"
+              v-for="dData in inventoryListData"
+              :key="dData.name"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="申请人" :label-width="formLabelWidth">
+          <el-input
+            v-model="storageForm.applicant"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="申请数量" :label-width="formLabelWidth">
+          <el-input-number
+            v-model="storageForm.applicationsQuantity"
+            :min="1"
+            :max="1000000"
+            label="申请数量"
+          ></el-input-number>
+        </el-form-item>
+        <el-form-item label="供应商" :label-width="formLabelWidth">
+          <el-input
+            v-model="storageForm.suppliers"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="订单ID" :label-width="formLabelWidth">
+          <el-input v-model="storageForm.orderId" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="storageDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="Storage">确 定</el-button>
+      </div>
+    </el-dialog>-->
+
+    <el-dialog title="购置入库申请" :visible.sync="storageDialogVisible">
+      <el-form :model="storageForm">
+        <el-form-item label="申请人" :label-width="formLabelWidth">
+          <el-input
+            v-model="storageForm.applicant"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="申请数量" :label-width="formLabelWidth">
+          <el-input-number
+            v-model="storageForm.applicationsQuantity"
+            :min="1"
+            :max="1000000"
+            label="申请数量"
+          ></el-input-number>
+        </el-form-item>
+        <el-form-item label="供应商" :label-width="formLabelWidth">
+          <el-input
+            v-model="storageForm.suppliers"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="订单ID" :label-width="formLabelWidth">
+          <el-input v-model="storageForm.orderId" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="storageDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="Storage">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -197,6 +279,8 @@ export default {
       searchResult: [],
       searchInventoryDialogVisible: false,
       addInventoryDialogVisible: false,
+      storageDialogVisible: false,
+      UnstorageDialogVisible: false,
       inventoryListData: [],
       ShipListData: [],
       formLabelWidth: '100px',
@@ -213,6 +297,23 @@ export default {
         inventoryUpperLimit: '',
         inventoryLowerLimit: '',
         note: ''
+      },
+      storageForm: {
+        applicant: '',
+        Material: '',
+        isAgree: false,
+        applicationsQuantity: '',
+        OperationType: true,
+        suppliers: '',
+        orderId: ''
+      },
+      UnStorageForm: {
+        applicant: '',
+        Material: '',
+        isAgree: false,
+        applicationsQuantity: '',
+        OperationType: false,
+        note: ''
       }
     }
   },
@@ -224,7 +325,6 @@ export default {
     async getShipList() {
       const { data: result } = await this.$axios.get('/api/ships/')
       this.ShipListData = result
-      console.log(this.ShipListData)
     },
     async getInventoryList() {
       const { data: result } = await this.$axios.get('/api/inventorys/')
@@ -242,11 +342,12 @@ export default {
         '/api/inventorys/',
         this.addInventoryForm
       )
-      if (result.data.inventory) {
+      console.log(result)
+      if (result.data.name) {
         this.$message.success('添加成功')
+        this.addInventoryDialogVisible = false
+        window.location.reload()
       }
-      this.addInventoryDialogVisible = false
-      window.location.reload()
     },
     deleteInventory() {
       this.$axios.delete('/api/inventorys/' + this.searchResult[0].name + '/')
@@ -256,7 +357,36 @@ export default {
     },
     dialogClose() {
       this.searchResult = []
-    }
+    },
+    async Storage(index, row) {
+      this.storageForm.Material = this.searchId
+      this.searchInventoryDialogVisible = false
+      const result = await this.$axios.post(
+        '/api/applications/',
+        this.storageForm
+      )
+      if (result.data.Material) {
+        const resultToPatch = await this.$axios.get(
+          '/api/inventorys/' + this.storageForm.Material + '/'
+        )
+        var patchForm = {
+          inventory:
+            resultToPatch.data.inventory +
+            this.storageForm.applicationsQuantity,
+          accumulativeStorage:
+            resultToPatch.data.accumulativeStorage +
+            this.storageForm.applicationsQuantity
+        }
+        this.$axios.patch(
+          '/api/inventorys/' + this.storageForm.Material + '/',
+          patchForm
+        )
+        window.location.reload()
+        this.$message.success('添加成功')
+        this.storageDialogVisible = false
+      }
+    },
+    UnStorage(index, row) {}
   }
 }
 </script>

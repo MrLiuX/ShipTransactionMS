@@ -12,6 +12,8 @@ router.register('departments', views.departmentViewSet)
 router.register('personnels',views.personnelViewSet)
 router.register('ships',views.shipViewSet)
 router.register('inventorys',views.inventoryViewSet)
+router.register('applications',views.applicationViewSet)
+router.register('certificate', views.certificateViewSet)
 
 urlpatterns = [
     path('api/',include(router.urls)),

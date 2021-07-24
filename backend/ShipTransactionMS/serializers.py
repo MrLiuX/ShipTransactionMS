@@ -24,3 +24,15 @@ class inventorySerializer(serializers.ModelSerializer):
     class Meta:
         model=Inventory
         fields = '__all__'
+
+
+class applicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = '__all__'
+
+
+class certificateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Certificate
+        fields = '__all__'

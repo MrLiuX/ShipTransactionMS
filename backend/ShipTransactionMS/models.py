@@ -48,10 +48,30 @@ class Inventory(models.Model):
 
 
 class Application(models.Model):
-    applicant = models.CharField(max_length=255)#申请人
-    date = models.CharField(max_length=255)
+    applicant = models.CharField(max_length=255)  # 申请人
+    date = models. DateTimeField(auto_now_add=True)
     Material = models.ForeignKey("Inventory", on_delete=models.CASCADE)
-    agreePersonnel = models.CharField(max_length=255)
-    isAgree=models.BooleanField(default=False)
-    applicationsNumber=models.IntegerField()
-    OperationType=models.BooleanField()#操作类型，True为购入，False为领用
+    agreePersonnel = models.CharField(
+        max_length=255, default="", blank=True, null=True)
+    isAgree = models.BooleanField(default=False)
+    applicationsQuantity = models.IntegerField()
+    OperationType = models.BooleanField()  # 操作类型，True为购入，False为领用
+    note = models.CharField(max_length=255, default="", blank=True, null=True)
+    suppliers = models.CharField(
+        max_length=255, default="", blank=True, null=True)
+    orderId = models.CharField(
+        max_length=255, default="", blank=True, null=True)
+
+
+class Certificate(models.Model):
+    ship = models.ForeignKey("Ship", on_delete=models.CASCADE)
+    variety = models.CharField(max_length=255)  # 种类
+    date = models. DateField(auto_now_add=True)
+    indate = models. DateField()
+    inspectionContent = models.CharField(max_length=255)  # 下次检验内容
+    inspectionDate = models.DateField()#下次检验日期
+    certificate = models.CharField(max_length=255)# 证书名称及编号
+    registrationId = models.CharField(max_length=255)#船检登记号
+    unit = models.CharField(max_length=255) #发证单位
+    note = models.CharField(max_length=255,default="", blank=True, null=True)
+    location = models.CharField(max_length=255) #存放位置

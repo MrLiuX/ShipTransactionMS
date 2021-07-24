@@ -27,7 +27,21 @@
               <span>物料管理</span>
             </template>
             <el-menu-item index="inventory">库存管理</el-menu-item>
+            <el-menu-item index="storage">入库申请</el-menu-item>
             <el-menu-item index="approval">申请审批</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-bank-card"></i>
+              <span>费用管理</span>
+            </template>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-document"></i>
+              <span>船舶证书管理</span>
+            </template>
+            <el-menu-item index="certificate">库存管理</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -39,10 +53,20 @@
 
 <script>
 export default {
+  created() {
+    this.open2()
+  },
   methods: {
     logout() {
       window.sessionStorage.clear()
       this.$router.push('/login')
+    },
+    open2() {
+      this.$notify({
+        title: '提示',
+        message: '您有一条待审批的申请',
+        duration: 0
+      })
     }
   }
 }

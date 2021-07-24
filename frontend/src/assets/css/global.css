@@ -29,10 +29,10 @@ html, body, #app {
   width: 50%;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 0 !important;
 }
 ::-webkit-scrollbar {
   width: 0 !important;
   height: 0;
-}
+} */
